@@ -1,0 +1,119 @@
+{
+  "#meta": {
+    "format": "ITF",
+    "format-description": "https://apalache.informal.systems/docs/adr/015adr-trace.html",
+    "description": "Created by Apalache on Thu Oct 20 16:32:25 CEST 2022"
+  },
+  "vars": ["action", "blogs"],
+  "states": [
+    {
+      "#meta": {
+        "index": 0
+      },
+      "action": {
+        "tag": "Nil",
+        "value": 0
+      },
+      "blogs": []
+    },
+    {
+      "#meta": {
+        "index": 1
+      },
+      "action": {
+        "tag": "Post",
+        "value": {
+          "body": 1,
+          "creator": "alice",
+          "title": 1
+        }
+      },
+      "blogs": [
+        {
+          "body": 1,
+          "creator": "alice",
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 2
+      },
+      "action": {
+        "tag": "Query",
+        "value": [
+          {
+            "body": 1,
+            "creator": "alice",
+            "title": 1
+          }
+        ]
+      },
+      "blogs": [
+        {
+          "body": 1,
+          "creator": "alice",
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 3
+      },
+      "action": {
+        "tag": "Post",
+        "value": {
+          "body": 1,
+          "creator": "bob",
+          "title": 1
+        }
+      },
+      "blogs": [
+        {
+          "body": 1,
+          "creator": "alice",
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "bob",
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 4
+      },
+      "action": {
+        "tag": "Query",
+        "value": [
+          {
+            "body": 1,
+            "creator": "alice",
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "bob",
+            "title": 1
+          }
+        ]
+      },
+      "blogs": [
+        {
+          "body": 1,
+          "creator": "alice",
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "bob",
+          "title": 1
+        }
+      ]
+    }
+  ]
+}
