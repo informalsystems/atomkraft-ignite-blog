@@ -74,7 +74,7 @@ def post(testnet: Testnet, home_dir: Path, action):
     if result is None:
         logging.info("\tNo response!!")
     elif result["code"] == 0:
-        logging.info("\tSuccessful!")
+        logging.info(f"\tPosted: {action.value}")
     else:
         code = result["code"]
         msg = result["raw_log"]
@@ -106,9 +106,22 @@ def query(testnet: Testnet, home_dir: Path, action):
     if proc.stdout:
         data = json.loads(proc.stdout.decode())["Post"]
 
-    logging.info("\tBlog list:")
-    logging.info(f"\t\tExpected: {blogs}")
-    logging.info(f"\t\tObserved: {data}")
-
     if proc.stderr:
         logging.info(f"\tstderr: {proc.stderr.decode()}")
+
+    if len(data) != len(blogs):
+        logging.info("\tBlog counts unmatched!")
+    elif len(data) > 0:
+        logging.info("\tBlog entries:")
+
+        for (i, (tla_entry, chain_entry)) in enumerate(zip(blogs, data)):
+            logging.info(f"\t\tExpected: {tla_entry} \t\t| Observed: {chain_entry}")
+            creator = tla_entry["creator"]
+            title = tla_entry["title"]
+            body = tla_entry["body"]
+            assert chain_entry["id"] == str(i)
+            assert chain_entry["creator"] == testnet.acc_addr(creator)
+            assert chain_entry["title"] == f"title-{title}"
+            assert chain_entry["body"] == f"body-{body}"
+    else:
+        logging.info("\tNo blog entries yet.")
