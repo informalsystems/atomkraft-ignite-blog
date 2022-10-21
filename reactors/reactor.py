@@ -17,9 +17,9 @@ def home_dir(tmp_path):
     return tmp_path / "blogd-client"
 
 
-@step("Nil")
+@step("Init")
 def init(testnet: Testnet, home_dir: Path):
-    logging.info("Step: Nil")
+    logging.info("Step: Init")
     testnet.set_accounts(["alice", "bob"])
     testnet.set_account_balances({"alice": int(1e10), "bob": int(1e10)})
     testnet.verbose = True
