@@ -2,19 +2,24 @@
   "#meta": {
     "format": "ITF",
     "format-description": "https://apalache.informal.systems/docs/adr/015adr-trace.html",
-    "description": "Created by Apalache on Thu Oct 20 16:32:25 CEST 2022"
+    "description": "Created by Apalache on Sat Oct 22 00:28:37 CEST 2022"
   },
-  "vars": ["action", "blogs"],
+  "vars": [
+    "action",
+    "blogs"
+  ],
   "states": [
     {
       "#meta": {
         "index": 0
       },
       "action": {
-        "tag": "Nil",
+        "tag": "Init",
         "value": 0
       },
-      "blogs": []
+      "blogs": [
+        
+      ]
     },
     {
       "#meta": {
@@ -23,15 +28,17 @@
       "action": {
         "tag": "Post",
         "value": {
-          "body": 1,
+          "body": 3,
           "creator": "alice",
+          "id": 0,
           "title": 1
         }
       },
       "blogs": [
         {
-          "body": 1,
+          "body": 3,
           "creator": "alice",
+          "id": 0,
           "title": 1
         }
       ]
@@ -45,18 +52,21 @@
         "value": {
           "body": 1,
           "creator": "alice",
+          "id": 1,
           "title": 1
         }
       },
       "blogs": [
         {
-          "body": 1,
+          "body": 3,
           "creator": "alice",
+          "id": 0,
           "title": 1
         },
         {
           "body": 1,
           "creator": "alice",
+          "id": 1,
           "title": 1
         }
       ]
@@ -70,24 +80,28 @@
         "value": {
           "body": 1,
           "creator": "bob",
-          "title": 1
+          "id": 2,
+          "title": 2
         }
       },
       "blogs": [
         {
-          "body": 1,
+          "body": 3,
           "creator": "alice",
+          "id": 0,
           "title": 1
         },
         {
           "body": 1,
           "creator": "alice",
+          "id": 1,
           "title": 1
         },
         {
           "body": 1,
           "creator": "bob",
-          "title": 1
+          "id": 2,
+          "title": 2
         }
       ]
     },
@@ -96,39 +110,277 @@
         "index": 4
       },
       "action": {
+        "tag": "Post",
+        "value": {
+          "body": 1,
+          "creator": "alice",
+          "id": 3,
+          "title": 1
+        }
+      },
+      "blogs": [
+        {
+          "body": 3,
+          "creator": "alice",
+          "id": 0,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 1,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "bob",
+          "id": 2,
+          "title": 2
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 3,
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 5
+      },
+      "action": {
         "tag": "Query",
         "value": [
           {
-            "body": 1,
+            "body": 3,
             "creator": "alice",
+            "id": 0,
             "title": 1
           },
           {
             "body": 1,
             "creator": "alice",
+            "id": 1,
             "title": 1
           },
           {
             "body": 1,
             "creator": "bob",
+            "id": 2,
+            "title": 2
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 3,
             "title": 1
           }
         ]
       },
       "blogs": [
         {
-          "body": 1,
+          "body": 3,
           "creator": "alice",
+          "id": 0,
           "title": 1
         },
         {
           "body": 1,
           "creator": "alice",
+          "id": 1,
           "title": 1
         },
         {
           "body": 1,
           "creator": "bob",
+          "id": 2,
+          "title": 2
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 3,
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 6
+      },
+      "action": {
+        "tag": "Query",
+        "value": [
+          {
+            "body": 3,
+            "creator": "alice",
+            "id": 0,
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 1,
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "bob",
+            "id": 2,
+            "title": 2
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 3,
+            "title": 1
+          }
+        ]
+      },
+      "blogs": [
+        {
+          "body": 3,
+          "creator": "alice",
+          "id": 0,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 1,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "bob",
+          "id": 2,
+          "title": 2
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 3,
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 7
+      },
+      "action": {
+        "tag": "Query",
+        "value": [
+          {
+            "body": 3,
+            "creator": "alice",
+            "id": 0,
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 1,
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "bob",
+            "id": 2,
+            "title": 2
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 3,
+            "title": 1
+          }
+        ]
+      },
+      "blogs": [
+        {
+          "body": 3,
+          "creator": "alice",
+          "id": 0,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 1,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "bob",
+          "id": 2,
+          "title": 2
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 3,
+          "title": 1
+        }
+      ]
+    },
+    {
+      "#meta": {
+        "index": 8
+      },
+      "action": {
+        "tag": "Query",
+        "value": [
+          {
+            "body": 3,
+            "creator": "alice",
+            "id": 0,
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 1,
+            "title": 1
+          },
+          {
+            "body": 1,
+            "creator": "bob",
+            "id": 2,
+            "title": 2
+          },
+          {
+            "body": 1,
+            "creator": "alice",
+            "id": 3,
+            "title": 1
+          }
+        ]
+      },
+      "blogs": [
+        {
+          "body": 3,
+          "creator": "alice",
+          "id": 0,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 1,
+          "title": 1
+        },
+        {
+          "body": 1,
+          "creator": "bob",
+          "id": 2,
+          "title": 2
+        },
+        {
+          "body": 1,
+          "creator": "alice",
+          "id": 3,
           "title": 1
         }
       ]
