@@ -2,7 +2,7 @@
 EXTENDS Apalache, Variants, Sequences, Integers
 
 (*
-@typeAlias: blog = {creator: Str, title: Int, body: Int};
+@typeAlias: blog = {id: Int, creator: Str, title: Int, body: Int};
 @typeAlias: action = Post($blog) | Query(Seq($blog)) | Init(Int);
 *)
 typedefs == TRUE
@@ -29,12 +29,12 @@ QueryAction == Variant("Query", blogs)
 
 PostNext ==
     \E creator \in USERS, title \in TITLES, body \in BODIES:
-        LET b == [creator |-> creator, title |-> title, body |-> body] IN
+        LET b == [id |-> Len(blogs), creator |-> creator, title |-> title, body |-> body] IN
         /\ blogs' = Append(blogs, b)
         /\ action' = PostAction(b)
 
 QueryNext ==
-    /\ UNCHANGED <<blogs>>
+    /\ UNCHANGED blogs
     /\ action' = QueryAction
 
 Next ==
@@ -43,9 +43,17 @@ Next ==
 
 
 \* @type: (Seq({blogs: Seq($blog), action: $action})) => Bool;
-TraceLen(trace) == ~(
-    Len(trace) = 5
-)
+MixedPostQuery(trace) ==
+    LET
+    \* @type: (Str -> Int, Int) => Str -> Int;
+    Foo(_map, i) == [_map EXCEPT ![VariantTag(trace[i].action)] = @ + 1] IN
+    LET count == ApaFoldSet(Foo, SetAsFun({<<"Init", 0>>, <<"Post", 0>>, <<"Query", 0>>}), DOMAIN trace) IN
+    /\ count["Post"] > 3
+    /\ count["Query"] > 3
+    /\ VariantTag(trace[Len(trace)].action) = "Query"
+
+\* @type: (Seq({blogs: Seq($blog), action: $action})) => Bool;
+NotMixedPostQuery(trace) == ~MixedPostQuery(trace)
 
 View == VariantTag(action)
 
