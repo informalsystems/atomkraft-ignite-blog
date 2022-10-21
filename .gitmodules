@@ -1,0 +1,3 @@
+[submodule "ignite-blog"]
+	path = ignite-blog
+	url = git@github.com:informalsystems/ignite-blog
