@@ -1,5 +1,7 @@
 import json
 import logging
+import random
+import string
 import subprocess
 from pathlib import Path
 
@@ -11,10 +13,18 @@ from modelator.pytest.decorators import step
 
 keypath = "action.tag"
 
+TITLE_LEN = 10
+BODY_LEN = 75
+
 
 @pytest.fixture
 def home_dir(tmp_path):
     return tmp_path / "blogd-client"
+
+
+def map_string(i, size: int):
+    r = random.Random(i)
+    return "".join(r.choices(string.ascii_lowercase + string.digits, k=size))
 
 
 @step("Init")
@@ -47,15 +57,15 @@ def init(testnet: Testnet, home_dir: Path):
 def post(testnet: Testnet, home_dir: Path, action):
     logging.info("Step: Post")
     creator = action.value.creator
-    title = action.value.title
-    body = action.value.body
+    action.value.title = map_string(action.value.title, size=TITLE_LEN)
+    action.value.body = map_string(action.value.body, size=BODY_LEN)
 
     rpc_addr = testnet.get_validator_port(0, "rpc")
 
     args = (
         f"{testnet.binary} "
         "tx blog "
-        f"create-post title-{title} body-{body} "
+        f"create-post {action.value.title} {action.value.body} "
         f"--from {creator} "
         "--broadcast-mode block "
         "-y "
@@ -74,7 +84,7 @@ def post(testnet: Testnet, home_dir: Path, action):
     if result is None:
         logging.info("\tNo response!!")
     elif result["code"] == 0:
-        logging.info(f"\tPosted: {action.value}")
+        logging.info(f"\tPosted: {munch.unmunchify(action.value)}")
     else:
         code = result["code"]
         msg = result["raw_log"]
@@ -87,7 +97,7 @@ def post(testnet: Testnet, home_dir: Path, action):
 @step("Query")
 def query(testnet: Testnet, home_dir: Path, action):
     logging.info("Step: Query")
-    blogs = munch.unmunchify(action.value)
+    blogs = action.value
 
     rpc_addr = testnet.get_validator_port(0, "rpc")
 
@@ -115,13 +125,16 @@ def query(testnet: Testnet, home_dir: Path, action):
         logging.info("\tBlog entries:")
 
         for (i, (tla_entry, chain_entry)) in enumerate(zip(blogs, data)):
-            logging.info(f"\t\tExpected: {tla_entry} \t\t| Observed: {chain_entry}")
+            tla_entry.title = map_string(tla_entry.title, size=TITLE_LEN)
+            tla_entry.body = map_string(tla_entry.body, size=BODY_LEN)
+            logging.info(f"\t\t- Expected: {munch.unmunchify(tla_entry)}")
+            logging.info(f"\t\t  Observed: {chain_entry}")
             creator = tla_entry["creator"]
             title = tla_entry["title"]
             body = tla_entry["body"]
             assert chain_entry["id"] == str(i)
             assert chain_entry["creator"] == testnet.acc_addr(creator)
-            assert chain_entry["title"] == f"title-{title}"
-            assert chain_entry["body"] == f"body-{body}"
+            assert chain_entry["title"] == title
+            assert chain_entry["body"] == body
     else:
         logging.info("\tNo blog entries yet.")
